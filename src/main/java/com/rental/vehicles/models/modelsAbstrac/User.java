@@ -21,7 +21,7 @@ public abstract class User {
     private String address;
     @Column(unique = true)
     private String email;
-    private String password;
+
 
     public User(String name, String surname, int phone, String address, String email, String password) {
     }

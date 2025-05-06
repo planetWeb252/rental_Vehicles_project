@@ -9,14 +9,17 @@ import lombok.Data;
 
 @Entity
 @Data
+
 public class Employee extends User {
 
-   @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Role_Employee roleEmployee;
 
-    public Employee(Role_Employee roleEmployee) {
+    public Employee(Long id, String name, String surname, int phone, String address, String email, Role_Employee roleEmployee) {
+        super(id, name, surname, phone, address, email);
         this.roleEmployee = roleEmployee;
     }
+
     public Employee() {
 
     }

@@ -17,9 +17,12 @@ public class Customer extends User {
 
     @OneToMany
     private List<Rental> rentals;
+    private String password;
 
-    public Customer(Long id, String name, String surname, int phone, String address, String email, String password) {
-        super(id, name, surname, phone, address, email, password);
+    public Customer(Long id, String name, String surname, int phone, String address, String email, List<Rental> rentals, String password) {
+        super(id, name, surname, phone, address, email);
+        this.rentals = rentals;
+        this.password = password;
     }
 
     public Customer() {
