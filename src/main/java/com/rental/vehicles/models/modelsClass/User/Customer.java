@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 public class Customer extends User {
 
 
+
     public Customer(Long id, String name, String surname, int phone, String address, String email, String password) {
         super(id, name, surname, phone, address, email, password);
     }
