@@ -1,13 +1,23 @@
 package com.rental.vehicles.models.modelsClass;
 
+import com.rental.vehicles.enums.Role_Employee;
+import com.rental.vehicles.models.modelsAbstrac.User;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.Data;
 
 @Entity
+@Data
 public class Employee extends User {
 
-    @Id
-    private Long id;
+   @Enumerated(EnumType.STRING)
+    private Role_Employee roleEmployee;
 
+    public Employee(Role_Employee roleEmployee) {
+        this.roleEmployee = roleEmployee;
+    }
+    public Employee() {
 
+    }
 }
