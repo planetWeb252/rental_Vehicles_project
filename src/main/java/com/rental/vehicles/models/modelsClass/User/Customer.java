@@ -1,10 +1,7 @@
-package com.rental.vehicles.models.modelsClass;
+package com.rental.vehicles.models.modelsClass.User;
 
 import com.rental.vehicles.models.modelsAbstrac.User;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

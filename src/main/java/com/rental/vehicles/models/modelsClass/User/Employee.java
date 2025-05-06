@@ -1,4 +1,4 @@
-package com.rental.vehicles.models.modelsClass;
+package com.rental.vehicles.models.modelsClass.User;
 
 import com.rental.vehicles.enums.Role_Employee;
 import com.rental.vehicles.models.modelsAbstrac.User;
