@@ -1,12 +1,14 @@
 package com.rental.vehicles.services.User;
 
 import com.rental.vehicles.models.DTO.customer.CustomerDTORegister;
+import com.rental.vehicles.models.DTO.customer.CustomerDtoLogin;
 import com.rental.vehicles.models.DTO.customer.CustomerResponseDTO;
 import com.rental.vehicles.models.modelsClass.User.Customer;
 import com.rental.vehicles.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +34,7 @@ public class CustomerService {
         customer.setAddress(dto.getAddress());
         String passEncoder = passwordEncoder.encode(dto.getPassword());
         customer.setPassword(passEncoder);
-        Customer saved=customerRepository.save(customer);
+        Customer saved = customerRepository.save(customer);
         CustomerResponseDTO customerResponseDTO = new CustomerResponseDTO();
         customerResponseDTO.setName(saved.getName());
         customerResponseDTO.setSurname(saved.getSurname());
@@ -41,6 +43,15 @@ public class CustomerService {
 
 
     }
+
+    public boolean checkPassword(Customer customer, CustomerDtoLogin dto) {
+        if(!passwordEncoder.matches(dto.getPassword(), customer.getPassword())){
+            throw new BadCredentialsException("Wrong password");
+        }
+        return true;
+    }
+
+
 
 
 }

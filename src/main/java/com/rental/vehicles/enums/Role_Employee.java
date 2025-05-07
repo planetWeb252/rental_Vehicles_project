@@ -1,11 +1,9 @@
 package com.rental.vehicles.enums;
 
 public enum Role_Employee {
-    MANAGER,
-    ADMIN,
-    EMPLOYEE,
-    DRIVER,
-    MECHANIC,
-    CLEANER,
-    SECURITY
+
+    ROLE_ADMIN,
+    ROLE_EMPLOYEE,
+    ROLE_MECHANIC,
+
 }
