@@ -22,6 +22,8 @@ public class EmployeeRegister {
 
     @PostMapping
     public ResponseEntity<EmployeeDTOResponse> register(@Valid @RequestBody EmployeeDTORegister dto) {
+        System.out.println("ENtro");
+
         return employeeService.createEmployee(dto);
     }
 

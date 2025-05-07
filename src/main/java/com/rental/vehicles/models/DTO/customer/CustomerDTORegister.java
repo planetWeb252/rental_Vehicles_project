@@ -1,7 +1,10 @@
 package com.rental.vehicles.models.DTO.customer;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,20 +13,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerDTORegister {
-    @NotBlank(message = "The id cannot be empty")
-    private Long id;
-    @NotBlank(message = "The name cannot be empty")
+    @NotNull(message = "The name cannot be empty")
     private String name;
-    @NotBlank(message = "The surname cannot be empty")
+    @NotNull(message = "The surname cannot be empty")
     private String surname;
-    @NotBlank(message = "The email cannot be empty or null")
+    @NotNull(message = "The email cannot be empty or null")
     @Email(message = "The email is not valid")
+
     private String email;
-    @NotBlank(message = "The phone cannot be empty")
-    private int phone;
-    @NotBlank(message = "The address cannot be empty")
+    @NotNull(message = "The phone cannot be empty or null")
+    private Integer phone;
+    @NotNull(message = "The address cannot be empty")
     private String address;
-    @NotBlank(message = "The password cannot be empty")
+    @NotNull(message = "The password cannot be empty")
     private String password;
     private String roleCustomer;
 

@@ -1,5 +1,6 @@
 package com.rental.vehicles.services.User;
 
+import com.rental.vehicles.enums.ROLE_Customer;
 import com.rental.vehicles.models.DTO.customer.CustomerDTORegister;
 import com.rental.vehicles.models.DTO.customer.CustomerDtoLogin;
 import com.rental.vehicles.models.DTO.customer.CustomerResponseDTO;
@@ -11,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CustomerService {
@@ -25,7 +28,11 @@ public class CustomerService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public ResponseEntity<CustomerResponseDTO> createCustomer(CustomerDTORegister dto) {
+    public ResponseEntity<?> createCustomer(CustomerDTORegister dto) {
+        Optional<Customer>customerEmailFound= customerRepository.findByEmail(dto.getEmail());
+        if (customerEmailFound.isPresent()) {
+            return new ResponseEntity<>("Email already exists", HttpStatus.BAD_REQUEST);
+        }
         Customer customer = new Customer();
         customer.setName(dto.getName());
         customer.setSurname(dto.getSurname());
@@ -34,24 +41,28 @@ public class CustomerService {
         customer.setAddress(dto.getAddress());
         String passEncoder = passwordEncoder.encode(dto.getPassword());
         customer.setPassword(passEncoder);
+        try {
+            if (dto.getRoleCustomer() == null) {
+                customer.setRoleCustomer(ROLE_Customer.valueOf("ROLE_REGISTER"));
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("The role is not valid");
+        }
         Customer saved = customerRepository.save(customer);
         CustomerResponseDTO customerResponseDTO = new CustomerResponseDTO();
         customerResponseDTO.setName(saved.getName());
-        customerResponseDTO.setSurname(saved.getSurname());
-        customerResponseDTO.setEmail(saved.getEmail());
+        customerResponseDTO.setRoleCustomer(String.valueOf(saved.getRoleCustomer()));
         return new ResponseEntity<>(customerResponseDTO, HttpStatus.CREATED);
 
 
     }
 
     public boolean checkPassword(Customer customer, CustomerDtoLogin dto) {
-        if(!passwordEncoder.matches(dto.getPassword(), customer.getPassword())){
+        if (!passwordEncoder.matches(dto.getPassword(), customer.getPassword())) {
             throw new BadCredentialsException("Wrong password");
         }
         return true;
     }
-
-
 
 
 }

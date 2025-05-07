@@ -8,11 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerResponseDTO {
-    private Long id;
+    private String message="Customer created successfully";
     private String name;
-    private String surname;
-    private String email;
-    private String phone;
-    private String address;
     private String roleCustomer;
 }

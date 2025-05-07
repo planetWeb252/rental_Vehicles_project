@@ -12,7 +12,7 @@ public class JwtServices {
     public String generateToken(String username) {
         return JWT.create()
                 .withSubject(username)
-                .withClaim("roles", "user") // Example claim, you can add more claims as needed;
+                .withClaim("roles", "LOGIN")
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 60 * 60 * 1000)) // 1 hour
                 .sign(Algorithm.HMAC256(SECRET));

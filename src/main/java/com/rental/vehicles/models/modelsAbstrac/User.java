@@ -17,7 +17,7 @@ public abstract class User {
     private Long id;
     private String name;
     private String surname;
-    private int phone;
+    private Integer phone;
     private String address;
     @Column(unique = true)
     private String email;

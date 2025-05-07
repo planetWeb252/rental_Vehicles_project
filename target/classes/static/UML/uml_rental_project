@@ -1,0 +1,76 @@
+@startuml
+abstract class User{
+- id:Long
+- name:String
+- email:String
+-password:String
+}
+
+class Customer{
+-roleCustomer
+-password
+
+}
+
+class Employee{
+-status:string
+}
+
+User --|>Customer
+User --|>Employee
+
+abstract class Vehicle{
+-id:Long
+-brand:String
+-model:String
+-year:int
+-pricePerDay: BigDecimal
+-status:String
+}
+class Car{
+//extend Vehicle
+}
+class Van{
+//extend Vehicle
+}
+class Rental{
+  - id: Long
+  - startDate: LocalDate
+  - endDate: LocalDate
+  - totalPrice: BigDecimal
+  - approved: Boolean
+  -IdCustomer:Customer
+  -IdVEhicle:Vehicle
+
+}
+enum VehicleStatus {
+    AVAILABLE,
+    RENTED,
+    MAINTENANCE
+}
+enum Role_Employee {
+    MANAGER,
+    ADMIN,
+    EMPLOYEE,
+    DRIVER,
+    MECHANIC,
+    CLEANER,
+    SECURITY
+}
+enum ROLE_Customer {
+    ROLE_LOGIN,
+    ROLE_REGISTER,
+    ROLE_LOGOUT,
+}
+Customer -->ROLE_Customer:roleCustomer
+Vehicle --> VehicleStatus : status
+Employee -->Role_Employee:status
+
+
+Vehicle --|>Car
+Vehicle --|>Van
+
+Customer "1" --> "*" Rental : alquileres
+Rental "1" --> "1" Vehicle : reservado para
+Rental "*" --> "1" Employee : aprobado por
+@enduml
