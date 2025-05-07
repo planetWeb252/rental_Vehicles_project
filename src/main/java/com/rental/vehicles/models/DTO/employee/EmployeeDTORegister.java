@@ -1,4 +1,4 @@
-package com.rental.vehicles.models.DTO;
+package com.rental.vehicles.models.DTO.employee;
 
 import com.rental.vehicles.enums.Role_Employee;
 
@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EmployyeDTO {
+public class EmployeeDTORegister {
     @NotBlank(message = "The id cannot be empty")
     private Long id;
     @NotBlank(message = "The name cannot be empty")

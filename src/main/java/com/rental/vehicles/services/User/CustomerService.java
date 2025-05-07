@@ -1,9 +1,12 @@
 package com.rental.vehicles.services.User;
 
 import com.rental.vehicles.models.DTO.customer.CustomerDTORegister;
+import com.rental.vehicles.models.DTO.customer.CustomerResponseDTO;
 import com.rental.vehicles.models.modelsClass.User.Customer;
 import com.rental.vehicles.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +23,7 @@ public class CustomerService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public CustomerDTORegister createCustomer(CustomerDTORegister dto) {
+    public ResponseEntity<CustomerResponseDTO> createCustomer(CustomerDTORegister dto) {
         Customer customer = new Customer();
         customer.setName(dto.getName());
         customer.setSurname(dto.getSurname());
@@ -29,9 +32,12 @@ public class CustomerService {
         customer.setAddress(dto.getAddress());
         String passEncoder = passwordEncoder.encode(dto.getPassword());
         customer.setPassword(passEncoder);
-        customerRepository.save(customer);
-        return new CustomerDTORegister(customer.getId(), customer.getName(),
-                customer.getSurname(), customer.getEmail(), customer.getPhone(), customer.getAddress(), passEncoder);
+        Customer saved=customerRepository.save(customer);
+        CustomerResponseDTO customerResponseDTO = new CustomerResponseDTO();
+        customerResponseDTO.setName(saved.getName());
+        customerResponseDTO.setSurname(saved.getSurname());
+        customerResponseDTO.setEmail(saved.getEmail());
+        return new ResponseEntity<>(customerResponseDTO, HttpStatus.CREATED);
 
 
     }
