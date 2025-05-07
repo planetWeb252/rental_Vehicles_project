@@ -1,4 +1,4 @@
-package com.rental.vehicles.models.DTO;
+package com.rental.vehicles.models.DTO.customer;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerDTO {
+public class CustomerDTORegister {
     @NotBlank(message = "The id cannot be empty")
     private Long id;
     @NotBlank(message = "The name cannot be empty")

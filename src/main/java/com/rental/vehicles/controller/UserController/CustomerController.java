@@ -1,7 +1,6 @@
 package com.rental.vehicles.controller.UserController;
 
-import com.rental.vehicles.models.DTO.CustomerDTO;
-import com.rental.vehicles.models.modelsClass.User.Customer;
+import com.rental.vehicles.models.DTO.customer.CustomerDTORegister;
 import com.rental.vehicles.services.User.CustomerService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/customer")
+@RequestMapping("/api/public/register")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -26,7 +25,7 @@ public class CustomerController {
 
 
     @PostMapping
-  public ResponseEntity<CustomerDTO> createCustomer(@Valid @RequestBody CustomerDTO dto) {
-
+  public ResponseEntity<CustomerDTORegister> createCustomer(@Valid @RequestBody CustomerDTORegister dto) {
+        CustomerDTORegister customerDTO = customerService.createCustomer(dto);
     }
 }
