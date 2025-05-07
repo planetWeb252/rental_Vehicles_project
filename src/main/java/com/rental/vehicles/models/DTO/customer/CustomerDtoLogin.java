@@ -16,4 +16,5 @@ public class CustomerDtoLogin {
     private String email;
     @NotNull(message = "The password cannot be empty or null")
     private String password;
+    private String roleCustomer;
 }

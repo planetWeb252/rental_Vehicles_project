@@ -25,8 +25,7 @@ public class CustomerDTORegister {
     private String address;
     @NotBlank(message = "The password cannot be empty")
     private String password;
-
-    private String roleCustomer = "ROLE_CUSTOMER";
+    private String roleCustomer;
 
 
 }
