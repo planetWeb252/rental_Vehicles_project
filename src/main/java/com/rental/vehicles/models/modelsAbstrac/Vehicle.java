@@ -20,7 +20,7 @@ public abstract class Vehicle {
     private String model;
     private String color;
     private int year;
-    private BigDecimal pricePerDay;
+    private double pricePerDay;
     private String fuelType;
     private int quantity;
     @Enumerated(EnumType.STRING)

@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployyeDTO {
+    @NotBlank(message = "The id cannot be empty")
+    private Long id;
     @NotBlank(message = "The name cannot be empty")
     private String name;
     @NotBlank(message = "The surname cannot be empty")
