@@ -12,6 +12,12 @@ public class Errormessages {
     // Employee Messages
     public static final String INVALID_ROLE_EMPLOYEE= "The Role is incorrect";
 
+    // Vehicle Messages
+    public static final String VEHICLE_NOT_FOUND= "Vehicle not found";
+
+
+
+
     public Errormessages() {
     }
 }

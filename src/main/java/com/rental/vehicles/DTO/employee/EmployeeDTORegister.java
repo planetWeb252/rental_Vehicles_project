@@ -16,18 +16,18 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeDTORegister {
-    @NotBlank(message = "The id cannot be empty")
+    @NotNull(message = "The id cannot be empty")
     private Long id;
-    @NotBlank(message = "The name cannot be empty")
+    @NotNull(message = "The name cannot be empty")
     private String name;
-    @NotBlank(message = "The surname cannot be empty")
+    @NotNull(message = "The surname cannot be empty")
     private String surname;
-    @NotBlank(message = "The email cannot be empty or null")
+    @NotNull(message = "The email cannot be empty or null")
     @Email(message = "The email is not valid")
     private String email;
-    @NotBlank(message = "The phone cannot be empty")
+    @NotNull(message = "The phone cannot be empty")
     private int phone;
-    @NotBlank(message = "The address cannot be empty")
+    @NotNull(message = "The address cannot be empty")
     private String address;
 
     private Role_Employee role;

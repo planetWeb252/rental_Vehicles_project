@@ -19,6 +19,7 @@ public abstract class Vehicle {
     private Long id;
     private String brand;
     private String model;
+    private String licensePlate;
     private String color;
     private int year;
     private double pricePerDay;
