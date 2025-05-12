@@ -1,11 +1,15 @@
 package com.rental.vehicles.services.User;
 
 import com.rental.vehicles.enums.ROLE_Customer;
-import com.rental.vehicles.models.DTO.customer.CustomerDTORegister;
-import com.rental.vehicles.models.DTO.customer.CustomerDtoLogin;
-import com.rental.vehicles.models.DTO.customer.CustomerResponseDTO;
+import com.rental.vehicles.DTO.customer.register.CustomerDTORegister;
+import com.rental.vehicles.DTO.customer.login.CustomerDtoLogin;
+import com.rental.vehicles.DTO.customer.register.CustomerDTOResponseRegister;
+import com.rental.vehicles.exceptions.Errormessages;
+import com.rental.vehicles.exceptions.User.UserExceptions;
 import com.rental.vehicles.models.modelsClass.User.Customer;
 import com.rental.vehicles.repositories.CustomerRepository;
+import com.rental.vehicles.services.jwtServices.JwtServices;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +24,13 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
-
+    private final JwtServices jwtServices;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder,JwtServices jwtServices) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtServices = jwtServices;
     }
 
     public ResponseEntity<?> createCustomer(CustomerDTORegister dto) {
@@ -49,15 +54,16 @@ public class CustomerService {
             throw new RuntimeException("The role is not valid");
         }
         Customer saved = customerRepository.save(customer);
-        CustomerResponseDTO customerResponseDTO = new CustomerResponseDTO();
-        customerResponseDTO.setName(saved.getName());
-        customerResponseDTO.setRoleCustomer(String.valueOf(saved.getRoleCustomer()));
-        return new ResponseEntity<>(customerResponseDTO, HttpStatus.CREATED);
+        CustomerDTOResponseRegister customerDTOResponseRegister = new CustomerDTOResponseRegister();
+        customerDTOResponseRegister.setName(saved.getName());
+        customerDTOResponseRegister.setEmail(saved.getEmail());
+        return new ResponseEntity<>(customerDTOResponseRegister, HttpStatus.CREATED);
 
 
     }
 
     public boolean checkPassword(Customer customer, CustomerDtoLogin dto) {
+
         if (!passwordEncoder.matches(dto.getPassword(), customer.getPassword())) {
             throw new BadCredentialsException("Wrong password");
         }
@@ -65,4 +71,30 @@ public class CustomerService {
     }
 
 
+    public ResponseEntity<?> loginCustomer(@Valid CustomerDtoLogin dto) {
+        if (dto.getRoleCustomer().equals("ROLE_REGISTER")){
+            // find in the bbdd
+            Optional<Customer> customer = customerRepository.findByEmail(dto.getEmail());
+            if (customer.isPresent()) {
+                Customer foundCustomer = customer.get();
+                if (checkPassword(foundCustomer, dto)) {
+                    //if the passs is correct generate the token and save the role in the bbdd
+                    String token = jwtServices.generateToken(foundCustomer.getName());
+                    foundCustomer.setRoleCustomer(ROLE_Customer.valueOf("ROLE_LOGIN"));
+                    customerRepository.save(foundCustomer);
+                    return ResponseEntity.status(HttpStatus.OK).body(token);
+                } else {
+                    // exception the pass is incorrect
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body( new UserExceptions(Errormessages.INVALID_CUSTOMER_PASSWORD));
+                }
+            } else {
+                // exception the customer is not found
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserExceptions(Errormessages.CUSTOMER_NOT_FOUND));
+            }
+
+        }else{
+            // exception the role is not valid
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UserExceptions(Errormessages.INVALID_CUSTOMER_LOGIN));
+        }
+    }
 }

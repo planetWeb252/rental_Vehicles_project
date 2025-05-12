@@ -1,11 +1,13 @@
 package com.rental.vehicles.services.User;
 
-import com.rental.vehicles.models.DTO.employee.EmployeeDTORegister;
-import com.rental.vehicles.models.DTO.employee.EmployeeDTOResponse;
+import com.rental.vehicles.DTO.employee.EmployeeDTORegister;
+import com.rental.vehicles.DTO.employee.EmployeeDTOResponse;
+import com.rental.vehicles.enums.Role_Employee;
+import com.rental.vehicles.exceptions.Employee.EmployeeExceptions;
+import com.rental.vehicles.exceptions.Errormessages;
 import com.rental.vehicles.models.modelsClass.User.Employee;
 import com.rental.vehicles.repositories.EmployeeRepository;
 import jakarta.validation.Valid;
-import org.antlr.v4.runtime.misc.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,14 +21,16 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public ResponseEntity<EmployeeDTOResponse> createEmployee(@Valid EmployeeDTORegister dto) {
+    public ResponseEntity<EmployeeDTOResponse> createEmployeeAdmin(@Valid EmployeeDTORegister dto) {
         Employee employee = new Employee();
         employee.setName(dto.getName());
         employee.setSurname(dto.getSurname());
         employee.setEmail(dto.getEmail());
         employee.setPhone(dto.getPhone());
         employee.setAddress(dto.getAddress());
-        employee.setRoleEmployee(dto.getRole());
+        if (dto.getRole() == null) {
+            employee.setRoleEmployee(Role_Employee.ROLE_ADMIN);
+        }
 
         Employee saved=employeeRepository.save(employee);
         EmployeeDTOResponse employeeDTOResponse = new EmployeeDTOResponse();
@@ -35,4 +39,27 @@ public class EmployeeService {
         employeeDTOResponse.setEmail(saved.getEmail());
         return new ResponseEntity<>(employeeDTOResponse, HttpStatus.CREATED);
     }
+
+    public  ResponseEntity<?> createEmployee(@Valid EmployeeDTORegister dto) {
+        Employee employee = new Employee();
+        employee.setName(dto.getName());
+        employee.setSurname(dto.getSurname());
+        employee.setEmail(dto.getEmail());
+        employee.setPhone(dto.getPhone());
+        employee.setAddress(dto.getAddress());
+        String role= dto.getRole().toString();
+        if (!role.equals("ROLE_ADMIN") && !role.equals("ROLE_EMPLOYEE")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EmployeeExceptions(Errormessages.INVALID_ROLE_EMPLOYEE));
+        }
+
+        Employee savedEmployee=employeeRepository.save(employee);
+        EmployeeDTOResponse employeeDTOResponse = new EmployeeDTOResponse();
+        employeeDTOResponse.setName(savedEmployee.getName());
+        employeeDTOResponse.setSurname(savedEmployee.getSurname());
+        employeeDTOResponse.setEmail(savedEmployee.getEmail());
+        return new ResponseEntity<>(employeeDTOResponse, HttpStatus.CREATED);
+    }
+
+
+
 }
