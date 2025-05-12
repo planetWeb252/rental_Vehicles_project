@@ -27,14 +27,14 @@ public class CustomerService {
     private final JwtServices jwtServices;
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder,JwtServices jwtServices) {
+    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder, JwtServices jwtServices) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtServices = jwtServices;
     }
 
     public ResponseEntity<?> createCustomer(CustomerDTORegister dto) {
-        Optional<Customer>customerEmailFound= customerRepository.findByEmail(dto.getEmail());
+        Optional<Customer> customerEmailFound = customerRepository.findByEmail(dto.getEmail());
         if (customerEmailFound.isPresent()) {
             return new ResponseEntity<>("Email already exists", HttpStatus.BAD_REQUEST);
         }
@@ -71,30 +71,31 @@ public class CustomerService {
     }
 
 
-    public ResponseEntity<?> loginCustomer(@Valid CustomerDtoLogin dto) {
-        if (dto.getRoleCustomer().equals("ROLE_REGISTER")){
-            // find in the bbdd
-            Optional<Customer> customer = customerRepository.findByEmail(dto.getEmail());
-            if (customer.isPresent()) {
-                Customer foundCustomer = customer.get();
-                if (checkPassword(foundCustomer, dto)) {
+    public ResponseEntity<?> loginCustomer(CustomerDtoLogin dto) {
+        // find the customer in the bbdd
+        Optional<Customer> optionalCustomer = customerRepository.findByEmail(dto.getEmail());
+        if (optionalCustomer.isPresent()) {
+            Customer customer = optionalCustomer.get();
+            if (customer.getRoleCustomer().equals(ROLE_Customer.valueOf("ROLE_REGISTER"))) {
+                if (checkPassword(customer, dto)) {
                     //if the passs is correct generate the token and save the role in the bbdd
-                    String token = jwtServices.generateToken(foundCustomer.getName());
-                    foundCustomer.setRoleCustomer(ROLE_Customer.valueOf("ROLE_LOGIN"));
-                    customerRepository.save(foundCustomer);
+                    String token = jwtServices.generateToken(customer.getName());
+                    customer.setRoleCustomer(ROLE_Customer.valueOf("ROLE_LOGIN"));
+                    customerRepository.save(customer);
                     return ResponseEntity.status(HttpStatus.OK).body(token);
                 } else {
                     // exception the pass is incorrect
-                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body( new UserExceptions(Errormessages.INVALID_CUSTOMER_PASSWORD));
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UserExceptions(Errormessages.INVALID_CUSTOMER_PASSWORD));
                 }
             } else {
-                // exception the customer is not found
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserExceptions(Errormessages.CUSTOMER_NOT_FOUND));
+                // exception the role is not valid
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UserExceptions(Errormessages.INVALID_CUSTOMER_LOGIN));
             }
-
-        }else{
-            // exception the role is not valid
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UserExceptions(Errormessages.INVALID_CUSTOMER_LOGIN));
+        } else {
+            // exception the customer is not found
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new UserExceptions(Errormessages.CUSTOMER_NOT_FOUND));
         }
+
+
     }
 }
