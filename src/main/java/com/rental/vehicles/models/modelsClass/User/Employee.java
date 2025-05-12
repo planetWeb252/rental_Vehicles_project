@@ -13,7 +13,7 @@ import lombok.Data;
 public class Employee extends User {
 
     @Enumerated(EnumType.STRING)
-    private Role_Employee roleEmployee= Role_Employee.ROLE_ADMIN;
+    private Role_Employee roleEmployee;
 
     public Employee(Long id, String name, String surname, Integer phone, String address, String email,
                     Role_Employee roleEmployee) {

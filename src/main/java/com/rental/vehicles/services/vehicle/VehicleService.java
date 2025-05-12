@@ -67,4 +67,15 @@ public class VehicleService {
             return ResponseEntity.status(404).body("Employee not found");
         }
     }
+
+    public boolean updateVehicleQuantity(String licensePlate) {
+        Optional<Vehicle> vehicleOptional = vehicleRepository.findByLicensePlate(licensePlate);
+            if (!vehicleOptional.isPresent()) {
+                return false;
+            }
+            Vehicle vehicle = vehicleOptional.get();
+            vehicle.setQuantity(vehicle.getQuantity() - 1);
+        return true;
+    }
+
 }

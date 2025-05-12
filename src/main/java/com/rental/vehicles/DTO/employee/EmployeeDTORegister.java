@@ -16,8 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmployeeDTORegister {
-    @NotNull(message = "The id cannot be empty")
-    private Long id;
+
     @NotNull(message = "The name cannot be empty")
     private String name;
     @NotNull(message = "The surname cannot be empty")

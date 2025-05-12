@@ -22,7 +22,7 @@ public class EmployeeRegisterController {
     }
 
     @PostMapping("/admin")
-    public ResponseEntity<EmployeeDTOResponse> register(@Valid @RequestBody EmployeeDTORegister dto) {
+    public ResponseEntity<?> register(@Valid @RequestBody EmployeeDTORegister dto) {
         return employeeService.createEmployeeAdmin(dto);
     }
     @PostMapping("/employeeOthers")
