@@ -11,10 +11,12 @@ import java.util.Date;
 public class JwtServices {
     private static final String SECRET = "@Secret_Key";
 
-    public String generateToken(String username) {
+
+    public String generateToken(String username,String email) {
         return JWT.create()
                 .withSubject(username)
                 .withClaim("roles", "ROLE_LOGIN")
+                .withClaim("email",email)
                 .withIssuedAt(new Date())
                 .withExpiresAt(new Date(System.currentTimeMillis() + 7*24*60*60*1000)) // 1 week
                 .sign(Algorithm.HMAC256(SECRET));
@@ -44,5 +46,13 @@ public class JwtServices {
                 .verify(token);
 
         return jwt.getClaim("roles").asString();
+    }
+
+    public String extractEmail(String token) {
+        DecodedJWT jwt = JWT.require(Algorithm.HMAC256(SECRET))
+                .build()
+                .verify(token);
+
+        return jwt.getClaim("email").asString();
     }
 }

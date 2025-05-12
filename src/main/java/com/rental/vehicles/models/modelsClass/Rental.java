@@ -25,7 +25,7 @@ public class Rental {
     private LocalDate startDate;
     private LocalDate endDate;
     private BigDecimal totalPrice;
-    private boolean aproved;
+    private boolean aproved=false;
     private boolean returned;
     @Enumerated(EnumType.STRING)
     private RentalStatus status;

@@ -79,7 +79,7 @@ public class CustomerService {
             if (customer.getRoleCustomer().name().equals("ROLE_REGISTER")) {
                 if (checkPassword(customer, dto)) {
                     //if the passs is correct generate the token and save the role in the bbdd
-                    String token = jwtServices.generateToken(customer.getName());
+                    String token = jwtServices.generateToken(customer.getName(), customer.getEmail());
                     customer.setRoleCustomer(ROLE_Customer.valueOf("ROLE_LOGIN"));
                     customerRepository.save(customer);
                     return ResponseEntity.status(HttpStatus.OK).body(token);

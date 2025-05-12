@@ -57,6 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         // If the token is valid, extract the username and roles
         String username = jwtService.extractUsername(token);
         String role = jwtService.extractRoles(token);
+        String email = jwtService.extractEmail(token);
 
 
        GrantedAuthority authority = new SimpleGrantedAuthority(role.trim());

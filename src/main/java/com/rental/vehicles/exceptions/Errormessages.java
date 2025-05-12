@@ -9,11 +9,15 @@ public class Errormessages {
     public static final String INVALID_CUSTOMER_LOGIN= "Incorrect login, the customer is login";
 
 
+
     // Employee Messages
     public static final String INVALID_ROLE_EMPLOYEE= "The Role is incorrect";
 
     // Vehicle Messages
     public static final String VEHICLE_NOT_FOUND= "Vehicle not found";
+    public static final String INVALID_VEHICLE= "The vehicle cannot be rental";
+    public static final String INVALID_VEHICLE_RENTAL_DATE= "Invalid rental dates";
+
 
 
 
