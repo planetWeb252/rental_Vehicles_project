@@ -73,10 +73,10 @@ public class CustomerService {
 
     public ResponseEntity<?> loginCustomer(CustomerDtoLogin dto) {
         // find the customer in the bbdd
-        Optional<Customer> optionalCustomer = customerRepository.findByEmail(dto.getEmail());
+        Optional<Customer> optionalCustomer = customerRepository.findRoleCustomerByEmail(dto.getEmail());
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
-            if (customer.getRoleCustomer().equals(ROLE_Customer.valueOf("ROLE_REGISTER"))) {
+            if (customer.getRoleCustomer().name().equals("ROLE_REGISTER")) {
                 if (checkPassword(customer, dto)) {
                     //if the passs is correct generate the token and save the role in the bbdd
                     String token = jwtServices.generateToken(customer.getName());

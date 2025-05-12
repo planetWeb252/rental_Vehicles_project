@@ -56,15 +56,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // If the token is valid, extract the username and roles
         String username = jwtService.extractUsername(token);
-        String roles = jwtService.extractRoles(token);
+        String role = jwtService.extractRoles(token);
 
 
-        // Convert the roles string to a list of Spring Security authorities
-        Collection<GrantedAuthority> authorities =  extractAuthorities(roles);
+       GrantedAuthority authority = new SimpleGrantedAuthority(role.trim());
         
         // Create an Authentication object with user information
         UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(username, null, authorities);
+                new UsernamePasswordAuthenticationToken(username, null, Collections.singleton(authority));
 
         // Set Authentication in the security context
         SecurityContextHolder.getContext().setAuthentication(authentication);
@@ -73,20 +72,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private Collection<GrantedAuthority> extractAuthorities(String rolesString) {
-        // Process the roles string. Example: "[ROLE_ADMIN, ROLE_USER]"
-        if (rolesString == null || rolesString.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        // Remove brackets and split by commas
-        String roles = rolesString.replace("[", "").replace("]", "");
-        String[] roleArray = roles.split(",");
-
-
-        return Arrays.stream(roleArray)
-                .map(String::trim) // Remove spaces
-                .map(SimpleGrantedAuthority::new) // We'll have roles in the correct format for Spring Security to recognize them
-                .collect(Collectors.toList());
-    }
+//    private Collection<GrantedAuthority> extractAuthorities(String rolesString) {
+//        // Process the roles string. Example: "[ROLE_ADMIN, ROLE_USER]"
+//        if (rolesString == null || rolesString.isEmpty()) {
+//            return Collections.emptyList();
+//        }
+//
+//        // Remove brackets and split by commas
+//        String roles = rolesString.replace("[", "").replace("]", "");
+//        String[] roleArray = roles.split(",");
+//
+//
+//        return Arrays.stream(roleArray)
+//                .map(String::trim) // Remove spaces
+//                .map(SimpleGrantedAuthority::new) // We'll have roles in the correct format for Spring Security to recognize them
+//                .collect(Collectors.toList());
+//    }
 }
