@@ -16,6 +16,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -96,5 +97,10 @@ public class CustomerService {
         }
 
 
+    }
+
+    public ResponseEntity<List<Customer>> findAll() {
+        List<Customer> customers=customerRepository.findAll();
+        return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 }

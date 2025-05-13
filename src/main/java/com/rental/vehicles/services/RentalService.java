@@ -131,6 +131,11 @@ public class RentalService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new VehicleExceptions(Errormessages.VEHICLE_NOT_FOUND));
         }
     }
+
+    public ResponseEntity<List<Rental>> allRentals() {
+       List<Rental> rentals= rentalRepository.findAll();
+       return ResponseEntity.ok(rentals);
+    }
 }
 
 

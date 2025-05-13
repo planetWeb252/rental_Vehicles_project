@@ -42,4 +42,5 @@ public class VehicleController {
                                            @Valid @RequestBody DeleteVehicleDto dto) {
         return vehicleService.deleteVehicle(licensePlate, dto);
     }
+
 }
