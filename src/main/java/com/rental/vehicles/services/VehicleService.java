@@ -31,8 +31,11 @@ public class VehicleService {
         this.employeeRepository = employeeRepository;
     }
 
-    public ResponseEntity<List<Vehicle>> allVehicles() {
+    public ResponseEntity<?> allVehicles() {
         List<Vehicle> vehicles = vehicleRepository.findAll();
+        if (vehicles.isEmpty()) {
+            return  ResponseEntity.ok().body("No Vehicles in the database");
+        }
         return ResponseEntity.ok(vehicles);
     }
 
