@@ -14,7 +14,7 @@ public class Errormessages {
     public static final String INVALID_ROLE_EMPLOYEE= "The Role is incorrect";
     public static final String INVALID_EMPLOYEE_NOT_ADMIN= "The employee is not admin";
     public static final String EMPLOYEE_NOT_FOUND = "Employee not found";
-
+    public static final String INVALID_ROLE_EMPLOYEE_NOT_ADMIN="The role of employee no is admin";
     // Vehicle Messages
     public static final String VEHICLE_NOT_FOUND= "Vehicle not found";
     public static final String INVALID_VEHICLE= "The vehicle cannot be rental";

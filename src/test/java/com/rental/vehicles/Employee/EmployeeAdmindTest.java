@@ -5,12 +5,11 @@ import com.rental.vehicles.enums.Role_Employee;
 import com.rental.vehicles.services.User.EmployeeService;
 import com.rental.vehicles.DTO.employee.EmployeeDTOResponse;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+
 import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import org.junit.jupiter.api.*;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
@@ -34,6 +33,8 @@ public class EmployeeAdmindTest {
         dto.setEmail("Jhon.Smith2@example.com");
         dto.setPhone(123456789);
         dto.setAddress("123 Main St");
+
+
         ResponseEntity<?> response = employeeService.createEmployeeAdmin(dto);
         assertThat(response.getStatusCodeValue()).isEqualTo(201);
         assertThat(response.getBody()).isInstanceOf(EmployeeDTOResponse.class);

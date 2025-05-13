@@ -18,10 +18,11 @@ public class Customer extends User {
 
     @OneToMany
     private List<Rental> rentals;
-    private String password;
+
     @Enumerated(EnumType.STRING)
     private ROLE_Customer roleCustomer;
-    //private ROLE_Customer roleCustomer= ROLE_Customer.ROLE_LOGOUT;
+
+    private String password;
 
     public Customer(Long id, String name, String surname, int phone, String address, String email, List<Rental> rentals, String password) {
         super(id, name, surname, phone, address, email);

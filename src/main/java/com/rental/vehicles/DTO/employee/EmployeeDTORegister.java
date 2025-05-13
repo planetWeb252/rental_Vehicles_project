@@ -28,7 +28,7 @@ public class EmployeeDTORegister {
     private int phone;
     @NotNull(message = "The address cannot be empty")
     private String address;
-
+    private String adminEmail;
     private Role_Employee role;
 
 

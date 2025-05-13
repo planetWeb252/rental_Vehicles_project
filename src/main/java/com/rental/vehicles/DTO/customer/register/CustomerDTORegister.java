@@ -1,5 +1,6 @@
 package com.rental.vehicles.DTO.customer.register;
 
+import com.rental.vehicles.enums.ROLE_Customer;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class CustomerDTORegister {
     private String address;
     @NotNull(message = "The password cannot be empty")
     private String password;
-    private String roleCustomer;
+    private ROLE_Customer roleCustomer;
 
 
 }

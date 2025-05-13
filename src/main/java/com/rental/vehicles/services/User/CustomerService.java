@@ -47,7 +47,7 @@ public class CustomerService {
         customer.setPassword(passEncoder);
         try {
             if (dto.getRoleCustomer() == null) {
-                customer.setRoleCustomer(ROLE_Customer.valueOf("ROLE_REGISTER"));
+                customer.setRoleCustomer(ROLE_Customer.ROLE_REGISTER);
             }
         } catch (RuntimeException e) {
             throw new RuntimeException("The role is not valid");
@@ -79,7 +79,7 @@ public class CustomerService {
                 if (checkPassword(customer, dto)) {
                     //if the passs is correct generate the token and save the role in the bbdd
                     String token = jwtServices.generateToken(customer.getName(), customer.getEmail());
-                    customer.setRoleCustomer(ROLE_Customer.valueOf("ROLE_LOGIN"));
+                    customer.setRoleCustomer(ROLE_Customer.ROLE_LOGIN);
                     customerRepository.save(customer);
                     return ResponseEntity.status(HttpStatus.OK).body(token);
                 } else {

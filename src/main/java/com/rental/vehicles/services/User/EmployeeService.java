@@ -43,6 +43,9 @@ public class EmployeeService {
         return new ResponseEntity<>(employeeDTOResponse, HttpStatus.CREATED);
     }
 
+    /*
+     * in this function the employee admin can create other employees
+     * */
     public ResponseEntity<?> createEmployee(@Valid EmployeeDTORegister dto) {
         Employee employee = new Employee();
         employee.setName(dto.getName());
@@ -50,17 +53,24 @@ public class EmployeeService {
         employee.setEmail(dto.getEmail());
         employee.setPhone(dto.getPhone());
         employee.setAddress(dto.getAddress());
+        Role_Employee newEmployeeRol = dto.getRole();
+        if (!newEmployeeRol.equals(Role_Employee.ROLE_EMPLOYEE) && !newEmployeeRol.equals(Role_Employee.ROLE_MECHANIC)
+                && !newEmployeeRol.equals(Role_Employee.ROLE_ADMIN)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EmployeeExceptions(Errormessages.INVALID_ROLE_EMPLOYEE));
+        } else {
 
-        Optional<Employee> employeeOptional = employeeRepository.findRoleEmployeeByEmail(dto.getEmail());
-        if (employeeOptional.isPresent()) {
-
-            String role = employeeOptional.get().toString();
-            if (!role.equals("ROLE_ADMIN") && !role.equals("ROLE_EMPLOYEE")) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EmployeeExceptions(Errormessages.INVALID_ROLE_EMPLOYEE));
+            employee.setRoleEmployee(dto.getRole());
+        }
+        //Employee Admin find by role
+        Optional<Employee> employeeAdminOptional = employeeRepository.findRoleEmployeeByEmail(dto.getAdminEmail());
+        if (employeeAdminOptional.isPresent()) {
+            Role_Employee rol = employeeAdminOptional.get().getRoleEmployee();
+            // if the rol not is Admin
+            if (!rol.equals(Role_Employee.ROLE_ADMIN)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new EmployeeExceptions(Errormessages.INVALID_ROLE_EMPLOYEE_NOT_ADMIN));
             }
         }
-
-
+        // save the new Employee
         Employee savedEmployee = employeeRepository.save(employee);
         EmployeeDTOResponse employeeDTOResponse = new EmployeeDTOResponse();
         employeeDTOResponse.setName(savedEmployee.getName());
