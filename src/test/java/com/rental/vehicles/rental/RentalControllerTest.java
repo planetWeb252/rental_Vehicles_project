@@ -1,28 +1,15 @@
-package com.rental.vehicles;
-import com.fasterxml.jackson.databind.ObjectMapper;
+package com.rental.vehicles.rental;
 import com.rental.vehicles.DTO.rental.RentalDTO;
 import com.rental.vehicles.DTO.rental.RentalDTOAproved;
 import com.rental.vehicles.DTO.rental.RentalDTOResponse;
-import com.rental.vehicles.DTO.vehicles.DeleteVehicleDto;
-import com.rental.vehicles.DTO.vehicles.UpdateVehiclesDto;
-import com.rental.vehicles.DTO.vehicles.VehicleDTO;
-import com.rental.vehicles.enums.Enum_Vehicles;
-import com.rental.vehicles.enums.Role_Employee;
-import com.rental.vehicles.models.modelsClass.User.Employee;
-import com.rental.vehicles.models.modelsClass.Vehicles.Car;
-import com.rental.vehicles.repositories.EmployeeRepository;
 import com.rental.vehicles.repositories.RentalRepository;
-import com.rental.vehicles.repositories.VehicleRepository;
 import com.rental.vehicles.services.RentalService;
-import com.rental.vehicles.services.VehicleService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
-import com.rental.vehicles.models.modelsAbstrac.Vehicle;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -13,9 +13,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class EmployeeService {
     private final EmployeeRepository employeeRepository;
+
     @Autowired
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -32,7 +35,7 @@ public class EmployeeService {
             employee.setRoleEmployee(Role_Employee.ROLE_ADMIN);
         }
 
-        Employee saved=employeeRepository.save(employee);
+        Employee saved = employeeRepository.save(employee);
         EmployeeDTOResponse employeeDTOResponse = new EmployeeDTOResponse();
         employeeDTOResponse.setName(saved.getName());
         employeeDTOResponse.setSurname(saved.getSurname());
@@ -40,26 +43,31 @@ public class EmployeeService {
         return new ResponseEntity<>(employeeDTOResponse, HttpStatus.CREATED);
     }
 
-    public  ResponseEntity<?> createEmployee(@Valid EmployeeDTORegister dto) {
+    public ResponseEntity<?> createEmployee(@Valid EmployeeDTORegister dto) {
         Employee employee = new Employee();
         employee.setName(dto.getName());
         employee.setSurname(dto.getSurname());
         employee.setEmail(dto.getEmail());
         employee.setPhone(dto.getPhone());
         employee.setAddress(dto.getAddress());
-        String role= dto.getRole().toString();
-        if (!role.equals("ROLE_ADMIN") && !role.equals("ROLE_EMPLOYEE")) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EmployeeExceptions(Errormessages.INVALID_ROLE_EMPLOYEE));
+
+        Optional<Employee> employeeOptional = employeeRepository.findRoleEmployeeByEmail(dto.getEmail());
+        if (employeeOptional.isPresent()) {
+
+            String role = employeeOptional.get().toString();
+            if (!role.equals("ROLE_ADMIN") && !role.equals("ROLE_EMPLOYEE")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EmployeeExceptions(Errormessages.INVALID_ROLE_EMPLOYEE));
+            }
         }
 
-        Employee savedEmployee=employeeRepository.save(employee);
+
+        Employee savedEmployee = employeeRepository.save(employee);
         EmployeeDTOResponse employeeDTOResponse = new EmployeeDTOResponse();
         employeeDTOResponse.setName(savedEmployee.getName());
         employeeDTOResponse.setSurname(savedEmployee.getSurname());
         employeeDTOResponse.setEmail(savedEmployee.getEmail());
         return new ResponseEntity<>(employeeDTOResponse, HttpStatus.CREATED);
     }
-
 
 
 }

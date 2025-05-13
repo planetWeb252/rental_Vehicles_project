@@ -1,4 +1,4 @@
-package com.rental.vehicles;
+package com.rental.vehicles.vehicles;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rental.vehicles.DTO.vehicles.DeleteVehicleDto;
