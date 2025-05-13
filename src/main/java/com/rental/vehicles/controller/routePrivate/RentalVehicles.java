@@ -1,8 +1,7 @@
 package com.rental.vehicles.controller.routePrivate;
 
 import com.rental.vehicles.DTO.rental.RentalDTO;
-import com.rental.vehicles.services.rental.RentalService;
-import com.rental.vehicles.services.vehicle.VehicleService;
+import com.rental.vehicles.services.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

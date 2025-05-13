@@ -1,7 +1,6 @@
 package com.rental.vehicles.repositories;
 
 import com.rental.vehicles.models.modelsClass.Rental;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

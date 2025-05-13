@@ -1,4 +1,4 @@
-package com.rental.vehicles.repositories.VehicleRepositories;
+package com.rental.vehicles.repositories;
 
 import com.rental.vehicles.models.modelsAbstrac.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;

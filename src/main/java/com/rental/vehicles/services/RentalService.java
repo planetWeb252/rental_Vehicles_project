@@ -1,4 +1,4 @@
-package com.rental.vehicles.services.rental;
+package com.rental.vehicles.services;
 
 import com.rental.vehicles.DTO.rental.RentalDTO;
 import com.rental.vehicles.DTO.rental.RentalDTOAproved;
@@ -15,9 +15,7 @@ import com.rental.vehicles.models.modelsClass.User.Employee;
 import com.rental.vehicles.repositories.CustomerRepository;
 import com.rental.vehicles.repositories.EmployeeRepository;
 import com.rental.vehicles.repositories.RentalRepository;
-import com.rental.vehicles.repositories.VehicleRepositories.VehicleRepository;
-import com.rental.vehicles.services.jwtServices.JwtServices;
-import com.rental.vehicles.services.vehicle.VehicleService;
+import com.rental.vehicles.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,23 +28,20 @@ import java.util.Optional;
 
 @Service
 public class RentalService {
-    private final RentalRepository rentalRepository;
-    private final VehicleRepository vehicleRepository;
-    private final CustomerRepository customerRepository;
-    private final EmployeeRepository employeeRepository;
-    private final VehicleService vehicleService;
-
 
     @Autowired
-    public RentalService(RentalRepository rentalRepository, VehicleRepository vehicleRepository,
-                         CustomerRepository customerRepository, EmployeeRepository employeeRepository, VehicleService vehicleService) {
-        this.rentalRepository = rentalRepository;
-        this.vehicleRepository = vehicleRepository;
-        this.customerRepository = customerRepository;
-        this.employeeRepository = employeeRepository;
-        this.vehicleService = vehicleService;
+    private  RentalRepository rentalRepository;
+    @Autowired
+    private  VehicleRepository vehicleRepository;
+    @Autowired
+    private  CustomerRepository customerRepository;
+    @Autowired
+    private  EmployeeRepository employeeRepository;
+    @Autowired
+    private  VehicleService vehicleService;
 
-    }
+
+
 
 
     //customer requests rental

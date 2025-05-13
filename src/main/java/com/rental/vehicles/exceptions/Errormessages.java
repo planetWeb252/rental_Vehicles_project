@@ -13,11 +13,13 @@ public class Errormessages {
     // Employee Messages
     public static final String INVALID_ROLE_EMPLOYEE= "The Role is incorrect";
     public static final String INVALID_EMPLOYEE_NOT_ADMIN= "The employee is not admin";
+    public static final String EMPLOYEE_NOT_FOUND = "Employee not found";
 
     // Vehicle Messages
     public static final String VEHICLE_NOT_FOUND= "Vehicle not found";
     public static final String INVALID_VEHICLE= "The vehicle cannot be rental";
     public static final String INVALID_VEHICLE_RENTAL_DATE= "Invalid rental dates";
+    public static final String INVALID_TYPE_VEHICLE ="Invalid vehicle type";
 
     //Rental Messages
     public static final String INVALID_RENTAL= "Dont exits rental by Status is Pending";

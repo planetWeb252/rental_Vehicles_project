@@ -27,7 +27,6 @@ public abstract class Vehicle {
     private int quantity;
     @Enumerated(EnumType.STRING)
     private Enum_Vehicles status_vehicle;
-    @Column(nullable = false)
     private boolean available=true;
 
 }

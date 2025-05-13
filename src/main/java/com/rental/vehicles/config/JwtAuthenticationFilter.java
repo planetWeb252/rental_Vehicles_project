@@ -1,6 +1,6 @@
 package com.rental.vehicles.config;
 
-import com.rental.vehicles.services.jwtServices.JwtServices;
+import com.rental.vehicles.services.JwtServices;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,12 +16,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 @Component
+
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Autowired
