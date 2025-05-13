@@ -1,4 +1,4 @@
-package com.rental.vehicles.controller.routePublic.login;
+package com.rental.vehicles.controller.routes.login;
 
 import com.rental.vehicles.DTO.customer.login.CustomerDtoLogin;
 import com.rental.vehicles.repositories.CustomerRepository;

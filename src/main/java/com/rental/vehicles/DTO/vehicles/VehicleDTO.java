@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class VehicleDTO {
-    @NotNull(message = "ID cannot be blank")
+
     private Long id;
     @NotNull(message = "Brand cannot be blank")
     private String brand;

@@ -1,7 +1,6 @@
-package com.rental.vehicles.controller.routePublic.register;
+package com.rental.vehicles.controller.routes.register;
 
 import com.rental.vehicles.DTO.employee.EmployeeDTORegister;
-import com.rental.vehicles.DTO.employee.EmployeeDTOResponse;
 import com.rental.vehicles.services.User.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

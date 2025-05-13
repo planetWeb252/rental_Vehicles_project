@@ -1,4 +1,4 @@
-package com.rental.vehicles.controller.routePublic.register;
+package com.rental.vehicles.controller.routes.register;
 
 import com.rental.vehicles.DTO.customer.register.CustomerDTORegister;
 import com.rental.vehicles.services.User.CustomerService;

@@ -46,7 +46,7 @@ public class RentalService {
 
     //customer requests rental
     public ResponseEntity<?> createRental(RentalDTO dto, String licensePlate) {
-        if (dto.getStartDate().isAfter(dto.getEndDate())) {
+        if (dto.getStartDate().isBefore(LocalDate.now())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new VehicleExceptions(Errormessages.INVALID_VEHICLE_RENTAL_DATE));
         }
         // customer request
@@ -90,11 +90,11 @@ public class RentalService {
 
 
     // employee approve rental
-    public ResponseEntity<?> approveRental(RentalDTOAproved dto) {
+    public ResponseEntity<?> approveRental(RentalDTOAproved dto,Long rentalId) {
         // vehicle is update??
         boolean updateVehicle = false;
         // find in the bbdd rental with status is pending
-        List<Rental> rental = rentalRepository.findRentalByStatus(RentalStatus.PENDING.name());
+        List<Rental> rental = rentalRepository.findRentalByStatus(RentalStatus.PENDING);
         if (rental.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RentalException(Errormessages.INVALID_RENTAL));
         }
@@ -111,7 +111,7 @@ public class RentalService {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RentalException(Errormessages.INVALID_RENTAL_NOT_APPROVED));
         }
         // passed the validations
-        Rental rentalbyId = rentalRepository.findRentalById(dto.getId());
+        Rental rentalbyId = rentalRepository.findRentalById(rentalId);
         //Update Rental
         if (rentalbyId != null) {
             rentalbyId.setAproved(true);

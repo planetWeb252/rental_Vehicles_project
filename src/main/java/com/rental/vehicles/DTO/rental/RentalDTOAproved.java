@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RentalDTOAproved {
-    @NotNull(message = "ID is required")
+
     private Long id;
     private String brand;
     private String model;

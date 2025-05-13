@@ -1,4 +1,4 @@
-package com.rental.vehicles.controller.routePublic.VehicleController;
+package com.rental.vehicles.controller.routes.VehicleController;
 
 import com.rental.vehicles.DTO.vehicles.DeleteVehicleDto;
 import com.rental.vehicles.DTO.vehicles.UpdateVehiclesDto;
