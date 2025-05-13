@@ -1,11 +1,12 @@
 # Rental Vehicles Project
-Sistema de gestión de vehiculos de alquiler con Spring Boot.  
-Permite a los administradores gestionar vehículos (coches, furgonetas, etc.), y a los clientes reservarlos.  El 
-sistema implementa autenticación con JWT y control de acceso basado en roles.
+Rental vehicle management system with Spring Boot.  
+It allows administrators to manage vehicles (cars, vans, etc.), and customers to reserve them.   
+The system 
+implements authentication with JWT and role-based access control.
 
 
 ---
-Directorio de carpetas   
+Folder directory
 ---
 ```` text
 src/
@@ -27,21 +28,23 @@ src/
 ````
 ---
 
-## Como ejecutar el Proyecto
+## ▶️  Run
 
-1. Clona el repositorio
+1. Clone the repository
 ```` bash
 
 git clone https://github.com/planetWeb252/rental_Vehicles_project.git
 
 ````
-2. Confugura el aplication.properties
-3. Ejecuta el Proyecto con Maven
+2. Configure the aplication.properties, the application needs a MySQL database.
+3. Run the Project with Maven
 ```` bash
 
 ./mvnw spring-boot:run
 
 ````
+4. Postman
+5. 
 ## 🔐 Seguridad y autenticación
 
 El proyecto tiene rutas en controllers.routes  
@@ -57,10 +60,19 @@ Roles
 - `Customer`: Pueder ver y reservar vehiculos
 
 ## 📦 Endpoints principales
-| Método | Ruta                 | Descripción                | Roles permitidos |
-| ------ | -------------------- | -------------------------- | ---------------- |
-| POST   | `/api/vehicles`      | Crear un nuevo vehículo    | ADMIN            |
-| GET    | `/api/vehicles`      | Listar todos los vehículos | ADMIN, CLIENT    |
-| POST   | `/api/reservations`  | Crear reserva de vehículo  | CLIENT           |
-| PUT    | `/api/vehicles/{id}` | Editar vehículo            | ADMIN            |
-| DELETE | `/api/vehicles/{id}` | Eliminar vehículo          | ADMIN            |
+| Método | Ruta                                                                                                                                                                                                            
+| ------ |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| POST   | `/api/public/login`<br/>`/api/public/customer`<br/> `/api/public/employee/register/admin` <br/> `/api/public/employee/register/employeeOthers ` <br/> ` /api/public/vehicle`                                    
+| GET    | `/api/public/customer/allCustomer` <br/> `/api/public/employee/register/allEmployee`<br/> `/api/private/rental/all`<br/> `/api/private/rental/request/{licensePlate}`     <br/>`/api/public/vehicle/allVehicles`
+| PUT    | `/api/public/approve/{rentalId}`<br/>`/api/public/vehicle/updateVehicle/{licensePlate}`                                                                                                                                                            
+| DELETE | `/api/public/vehicle/deleteVehicle/{licensePlate}`                                                                                                                                                                                             
+
+## ✅ Pruebas
+El proyecto incluye pruebas unitarias y de integración con JUnit y MockMvc. Para ejecutarlas:
+``` bash
+
+./mvnw test
+```
+
+## 👤 Autor
+- [DevJerryX](https://github.com/planetWeb252)
