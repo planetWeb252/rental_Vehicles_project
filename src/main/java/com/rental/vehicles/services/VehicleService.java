@@ -46,7 +46,7 @@ public class VehicleService {
         if (employeeOptional.isPresent()) {
             Employee employee = employeeOptional.get();
             try {
-                if (employee.getRoleEmployee().name().equals("ROLE_ADMIN")) {
+                if (employee.getRoleEmployee().name().equals("ADMIN")) {
                     Vehicle vehicle = vehicleRepository.findByLicensePlate(dto.getLicensePlate()).orElse(null);
                     if (vehicle != null) {
 
