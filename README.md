@@ -5,9 +5,10 @@ The system
 implements authentication with JWT and role-based access control.
 ---
 ## Enlaces de Interés
-- 🌐 [Google Slides](https://docs.google.com/presentation/d/1CiaAXrMYRgR4OR7q_lKe1H3aQalHOOZDRRhaFnhWI6Yhttps://docs.google.com/presentation/d/1CiaAXrMYRgR4OR7q_lKe1H3aQalHOOZDRRhaFnhWI6Y/edit?usp=sharing/edit#slide=id.g358acabde9a_0_509)
+- 🌐 [Google Slides](https://docs.google.com/presentation/d/1CiaAXrMYRgR4OR7q_lKe1H3aQalHOOZDRRhaFnhWI6Y/edit?usp=sharing)
 
 - 🔗 [Capturas Postman](https://docs.google.com/presentation/d/1CiaAXrMYRgR4OR7q_lKe1H3aQalHOOZDRRhaFnhWI6Y/edit?usp=drive_link)
+- 🧩[Uml](https://drive.google.com/file/d/1SO0oANf9JK7m1Au4TMnbw5w9egrEpGT7/view?usp=sharing)
 ---
 Folder directory
 ---
