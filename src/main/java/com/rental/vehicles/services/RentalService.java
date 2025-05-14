@@ -52,7 +52,7 @@ public class RentalService {
         // customer request
         Optional<Customer> customer = customerRepository.findRoleCustomerByEmail(dto.getEmail());
         if (customer.isPresent()) {
-            if (customer.get().getRoleCustomer().name().equals("ROLE_LOGIN")) {
+            if (customer.get().getRoleCustomer().name().equals("LOGIN")) {
                 // check if vehicle is available
                 Optional<Vehicle> vehicle = vehicleRepository.findByLicensePlate(licensePlate);
                 if (vehicle.isPresent()) {
@@ -107,7 +107,7 @@ public class RentalService {
         Employee employee = employeeOptional.get();
 
         // employee is admin??
-        if (!employee.getRoleEmployee().name().equals("ROLE_ADMIN")) {
+        if (!employee.getRoleEmployee().name().equals("ADMIN")) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new RentalException(Errormessages.INVALID_RENTAL_NOT_APPROVED));
         }
         // passed the validations

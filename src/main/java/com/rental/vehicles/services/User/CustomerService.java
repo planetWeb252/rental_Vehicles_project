@@ -8,7 +8,6 @@ import com.rental.vehicles.exceptions.Errormessages;
 import com.rental.vehicles.exceptions.User.UserExceptions;
 import com.rental.vehicles.models.modelsClass.User.Customer;
 import com.rental.vehicles.repositories.CustomerRepository;
-import com.rental.vehicles.services.JwtServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,13 +24,13 @@ public class CustomerService {
 
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
-    private final JwtServices jwtServices;
+
 
     @Autowired
-    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder, JwtServices jwtServices) {
+    public CustomerService(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
-        this.jwtServices = jwtServices;
+
     }
 
     public ResponseEntity<?> createCustomer(CustomerDTORegister dto) {
@@ -48,7 +48,7 @@ public class CustomerService {
         customer.setPassword(passEncoder);
         try {
             if (dto.getRoleCustomer() == null) {
-                customer.setRoleCustomer(ROLE_Customer.ROLE_REGISTER);
+                customer.setRoleCustomer(ROLE_Customer.REGISTER);
             }
         } catch (RuntimeException e) {
             throw new RuntimeException("The role is not valid");
@@ -76,13 +76,11 @@ public class CustomerService {
         Optional<Customer> optionalCustomer = customerRepository.findRoleCustomerByEmail(dto.getEmail());
         if (optionalCustomer.isPresent()) {
             Customer customer = optionalCustomer.get();
-            if (customer.getRoleCustomer().name().equals("ROLE_REGISTER")) {
+            if (customer.getRoleCustomer().name().equals("REGISTER")) {
                 if (checkPassword(customer, dto)) {
-                    //if the passs is correct generate the token and save the role in the bbdd
-                    String token = jwtServices.generateToken(customer.getName(), customer.getEmail());
-                    customer.setRoleCustomer(ROLE_Customer.ROLE_LOGIN);
+                    customer.setRoleCustomer(ROLE_Customer.LOGIN);
                     customerRepository.save(customer);
-                    return ResponseEntity.status(HttpStatus.OK).body(token);
+                    return ResponseEntity.status(HttpStatus.OK).body("usuario Logueado");
                 } else {
                     // exception the pass is incorrect
                     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new UserExceptions(Errormessages.INVALID_CUSTOMER_PASSWORD));

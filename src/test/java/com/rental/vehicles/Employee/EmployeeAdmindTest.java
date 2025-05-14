@@ -53,7 +53,7 @@ public class EmployeeAdmindTest {
         employeeDTORegister.setEmail("olivia.gonzalez@example.es");
         employeeDTORegister.setPhone(123456789);
         employeeDTORegister.setAddress("La charca, 32");
-        employeeDTORegister.setRole(Role_Employee.ROLE_EMPLOYEE);
+        employeeDTORegister.setRole(Role_Employee.EMPLOYEE);
 
         ResponseEntity<?> response = employeeService.createEmployeeAdmin(employeeDTORegister);
         assertThat(response.getStatusCodeValue()).isEqualTo(201);

@@ -14,6 +14,7 @@ import com.rental.vehicles.repositories.EmployeeRepository;
 import com.rental.vehicles.repositories.VehicleRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -88,10 +89,10 @@ public class VehicleService {
     public ResponseEntity<?> createVehicle(@Valid VehicleDTO dto) {
         Optional<Employee> employeeOptional = employeeRepository.findByEmail(dto.getEmailEmployee());
         if (!employeeOptional.isPresent()) {
-            return ResponseEntity.status(404).body(new VehicleExceptions(Errormessages.EMPLOYEE_NOT_FOUND));
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new VehicleExceptions(Errormessages.EMPLOYEE_NOT_FOUND));
         }
-        if (!employeeOptional.get().getRoleEmployee().name().equals("ROLE_ADMIN")) {
-            return ResponseEntity.status(403).body(new VehicleExceptions(Errormessages.INVALID_EMPLOYEE_NOT_ADMIN));
+        if (!employeeOptional.get().getRoleEmployee().name().equals("ADMIN")) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new VehicleExceptions(Errormessages.INVALID_EMPLOYEE_NOT_ADMIN));
         }
         String vehicleType = dto.getTypeOfVehicle();
         switch (vehicleType) {

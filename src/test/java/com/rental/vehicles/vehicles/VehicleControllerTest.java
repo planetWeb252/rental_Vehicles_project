@@ -51,12 +51,12 @@ public class VehicleControllerTest {
         dto.setPricePerDay(60.0);
         dto.setFuelType("Gasoline");
         dto.setQuantity(5);
-        dto.setStatus_vehicle(Enum_Vehicles.ROLE_AVAILABLE);
+        dto.setStatus_vehicle(Enum_Vehicles.AVAILABLE);
         dto.setLicensePlate(LICENSE_PLATE);
         //EMPLOYEE
         Employee employee = new Employee();
         employee.setEmail("laura.garcia2@example.com");
-        employee.setRoleEmployee(Role_Employee.ROLE_ADMIN);
+        employee.setRoleEmployee(Role_Employee.ADMIN);
         //Car
         Car car = new Car();
         car.setBrand(dto.getBrand());

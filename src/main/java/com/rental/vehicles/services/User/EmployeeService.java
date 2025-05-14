@@ -25,7 +25,7 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public ResponseEntity<EmployeeDTOResponse> createEmployeeAdmin(@Valid EmployeeDTORegister dto) {
+    public ResponseEntity<?> createEmployeeAdmin(@Valid EmployeeDTORegister dto) {
         Employee employee = new Employee();
         employee.setName(dto.getName());
         employee.setSurname(dto.getSurname());
@@ -33,9 +33,13 @@ public class EmployeeService {
         employee.setPhone(dto.getPhone());
         employee.setAddress(dto.getAddress());
         if (dto.getRole() == null) {
-            employee.setRoleEmployee(Role_Employee.ROLE_ADMIN);
+            employee.setRoleEmployee(Role_Employee.ADMIN);
         }
-
+        Optional<Employee>employeeOptional = employeeRepository.findByEmail(dto.getEmail());
+        if (employeeOptional.isPresent()) {
+            return new ResponseEntity<>("The employee exist in the database with email: "+dto.getEmail(),
+                    HttpStatus.FORBIDDEN);
+        }
         Employee saved = employeeRepository.save(employee);
         EmployeeDTOResponse employeeDTOResponse = new EmployeeDTOResponse();
         employeeDTOResponse.setName(saved.getName());
@@ -55,8 +59,8 @@ public class EmployeeService {
         employee.setPhone(dto.getPhone());
         employee.setAddress(dto.getAddress());
         Role_Employee newEmployeeRol = dto.getRole();
-        if (!newEmployeeRol.equals(Role_Employee.ROLE_EMPLOYEE) && !newEmployeeRol.equals(Role_Employee.ROLE_MECHANIC)
-                && !newEmployeeRol.equals(Role_Employee.ROLE_ADMIN)) {
+        if (!newEmployeeRol.equals(Role_Employee.EMPLOYEE) && !newEmployeeRol.equals(Role_Employee.MECHANIC)
+                && !newEmployeeRol.equals(Role_Employee.ADMIN)) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new EmployeeExceptions(Errormessages.INVALID_ROLE_EMPLOYEE));
         } else {
 
@@ -67,7 +71,7 @@ public class EmployeeService {
         if (employeeAdminOptional.isPresent()) {
             Role_Employee rol = employeeAdminOptional.get().getRoleEmployee();
             // if the rol not is Admin
-            if (!rol.equals(Role_Employee.ROLE_ADMIN)) {
+            if (!rol.equals(Role_Employee.ADMIN)) {
                 return ResponseEntity.status(HttpStatus.FORBIDDEN).body(new EmployeeExceptions(Errormessages.INVALID_ROLE_EMPLOYEE_NOT_ADMIN));
             }
         }

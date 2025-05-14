@@ -44,7 +44,7 @@ public class CreatedCurstomerTest {
         customerDTORegister.setAddress("La calle el olivo 45");
         customerDTORegister.setPassword("1234");
 
-        customerDTORegister.setRoleCustomer(ROLE_Customer.ROLE_REGISTER);
+        customerDTORegister.setRoleCustomer(ROLE_Customer.REGISTER);
         ResponseEntity<?> response = customerService.createCustomer(customerDTORegister);
         assertThat(response.getStatusCodeValue()).isEqualTo(201);
         assertThat(response.getBody()).isInstanceOf(CustomerDTOResponseRegister.class);
