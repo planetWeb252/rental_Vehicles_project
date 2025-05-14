@@ -3,8 +3,11 @@ Rental vehicle management system with Spring Boot.
 It allows administrators to manage vehicles (cars, vans, etc.), and customers to reserve them.   
 The system 
 implements authentication with JWT and role-based access control.
+---
+## Enlaces de Interés
+- 🌐 [Google Slides](https://docs.google.com/presentation/d/1CiaAXrMYRgR4OR7q_lKe1H3aQalHOOZDRRhaFnhWI6Yhttps://docs.google.com/presentation/d/1CiaAXrMYRgR4OR7q_lKe1H3aQalHOOZDRRhaFnhWI6Y/edit?usp=sharing/edit#slide=id.g358acabde9a_0_509)
 
-
+- 🔗 [Capturas Postman](https://docs.google.com/presentation/d/1CiaAXrMYRgR4OR7q_lKe1H3aQalHOOZDRRhaFnhWI6Y/edit?usp=drive_link)
 ---
 Folder directory
 ---
@@ -43,8 +46,7 @@ git clone https://github.com/planetWeb252/rental_Vehicles_project.git
 ./mvnw spring-boot:run
 
 ````
-4. Postman
-5. 
+4. Inicia Postman
 ## 🔐 Seguridad y autenticación
 
 El proyecto tiene rutas en controllers.routes  
